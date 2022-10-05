@@ -181,6 +181,101 @@ The total weight of trash collected by Professor Trash Wheel is `r sum(Pf_Trash_
 
 The total number of sports balls collected by Mr. Trash Wheel in 2020 is `r Mr_Trash_df %>% filter (year=="2020") %>% pull(sports_balls) %>% sum()` balls. 
 
+## Problem 3
+
+### Dataset for pols-month.csv
+
+```{r}
+pols_month_df <- read_csv("./data/pols-month.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(mon, into = c("year", "month", "day"), sep = '-') %>% 
+  mutate(year = as.numeric(year),
+        month = month.abb[as.numeric(month)],
+        president = case_when(
+        prez_dem == 1 ~ "dem",
+        prez_gop > 0 ~ "gop",
+        TRUE ~ "")) %>% 
+  select(-prez_dem, -prez_gop, -day)
+  
+skimr::skim(pols_month_df)
+```
+
+i have loaded and cleaned the data in pols-month.csv, as well as separated the column "mon" into "year", "month" and day". I also converted the "month" variable into a numeric variable. I replaced the month number with a month name.
+
+I also created a president variable taking values gop and dem, and remove prez_dem and prez_gop; and remove the day variable.
+
+
+### Dataset for snp.csv
+
+```{r}
+snp_df <- read_csv("./data/snp.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = '/') %>% 
+  mutate(year = as.numeric(year)) %>% 
+  mutate(month = month.abb[as.numeric(month)]) %>% 
+  select(-day) %>% 
+      mutate(year=if_else(year<23, year+2000, year+1900)) %>% 
+  arrange(year, month)
+
+
+skimr::skim(snp_df)
+```
+
+i have loaded and cleaned the data in snp.csv, as well as separated the column "date" into "month", "day", "year". I also converted the "month" variable into a numeric variable. 
+
+I replaced the month number with a month name.
+
+Also I changed the year from a double digit format to a four digit format. 
+
+
+### Tidying unemployment data
+
+```{r}
+
+unemp_df <- 
+  read_csv("./data/unemployment.csv") %>%
+  janitor::clean_names() %>%
+   pivot_longer( 
+     cols = jan:dec,
+     names_to = "month",
+     values_to = "percent_unemployment") 
+    
+skimr::skim(unemp_df)
+
+pols_snp_df = left_join (pols_month_df, snp_df)
+
+pols_snp_unemp_df = left_join (pols_snp_df, unemp_df)
+  
+```
+
+
+__pols_month_df dataset__
+
+* There are  `r ncol(pols_month_df)` columns (variables) and `r nrow(pols_month_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(pols_month_df)`. This shows the year and month that democrat and republican presidents, governors, senators, house of representatives and senators were in office. 
+* Range of years is `r range(pols_month_df$year)`. 
+
+__snp_df dataset__
+
+* There are  `r ncol(snp_df)` columns (variables) and `r nrow(snp_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(snp_df)`. This shows percent of unemployment in a specific year and month.
+* Range of years is `r range(snp_df$year)`. 
+
+__unemp_df dataset__
+
+* There are  `r ncol(unemp_df)` columns (variables) and `r nrow(unemp_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(unemp_df)`. This shows the year and month that the stock markets close and the closing stock prices. 
+* Range of years is `r range(unemp_df$year)`. 
+
+__pols_snp_unemp_df__
+
+* There are  `r ncol(pols_snp_unemp_df)` columns (variables) and `r nrow(pols_snp_unemp_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(pols_snp_unemp_df)`. This is a combined dataset featuring variables from the pols_month_df, snp_df and unemp_df (shown above).
+* Range of years is `r range(pols_snp_unemp_df$year)`. 
+
+
+
+
 
 
 
