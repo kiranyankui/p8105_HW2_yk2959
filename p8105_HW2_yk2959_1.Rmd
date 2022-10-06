@@ -144,3 +144,37 @@ Pf_Trash_df <- read_excel("./data/Trash Wheel Collection Data.xlsx",
 skimr::skim(Pf_Trash_df)
 
 ```
+
+
+
+```{r}
+# Joining the datasets for Mr Trash Wheel and Professor Trash Wheel
+Both_Trash_df <- 
+  full_join(Mr_Trash_df, Pf_Trash_df)
+
+Both_Trash_df
+
+Both_Trash_df$name
+```
+
+__Mr Trash Wheel dataset (Mr_Trash_df)__
+* there are `r ncol(Mr_Trash_df)` columns (variables) and `r nrow(Mr_Trash_df)` rows (observations)
+
+__Professor Trash Wheel (Pf_Trash_df)__
+* there are `r ncol(Pf_Trash_df)` columns (variables) and `r nrow(Pf_Trash_df)` rows (observations).
+
+__combined dataset (Both_Trash_df)__
+* There are `r ncol(Both_Trash_df)` columns (variables) and `r nrow(Both_Trash_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(Both_Trash_df)`. 
+
+The combined dataset Both_Trash_df contains:
+
+* The year/month/day of trash collection yards
+* The weight of trash collected in tons and the volume in cubic 
+* number of trash items collected (plastic bottles, polystyrene, cigarette butts, grocery bags, glass bottles, chip bags, and sports balls)
+* homes powered 
+* and the name of the Trash Wheel (Mr. or Prof.)
+
+The total weight of trash collected by Professor Trash Wheel is `r sum(Pf_Trash_df$weight_tons)` tons. 
+
+The total number of sports balls collected by Mr. Trash Wheel in 2020 is `r Mr_Trash_df %>% filter (year=="2020") %>% pull(sports_balls) %>% sum()` balls. 
