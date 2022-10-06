@@ -225,3 +225,25 @@ I replaced the month number with a month name.
 
 Also I changed the year from a double digit format to a four digit format. 
 
+### Tidying unemployment data
+
+```{r}
+unemp_df <- 
+  read_csv("./data/unemployment.csv") %>%
+  janitor::clean_names() %>%
+   pivot_longer( 
+     cols = jan:dec,
+     names_to = "month",
+     values_to = "percent_unemployment") 
+    
+skimr::skim(unemp_df)
+  
+```
+Joining datasets
+
+```{r}
+pols_snp_df = left_join (pols_month_df, snp_df)
+
+pols_snp_unemp_df = left_join (pols_snp_df, unemp_df)
+```
+
