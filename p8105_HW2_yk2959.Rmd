@@ -231,7 +231,6 @@ Also I changed the year from a double digit format to a four digit format.
 ### Tidying unemployment data
 
 ```{r}
-
 unemp_df <- 
   read_csv("./data/unemployment.csv") %>%
   janitor::clean_names() %>%
