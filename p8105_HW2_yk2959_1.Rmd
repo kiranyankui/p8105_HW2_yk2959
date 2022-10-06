@@ -247,3 +247,29 @@ pols_snp_df = left_join (pols_month_df, snp_df)
 pols_snp_unemp_df = left_join (pols_snp_df, unemp_df)
 ```
 
+__pols_month_df dataset__
+
+* There are  `r ncol(pols_month_df)` columns (variables) and `r nrow(pols_month_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(pols_month_df)`. This shows the year and month that democrat and republican presidents, governors, senators, house of representatives and senators were in office. 
+* Range of years is `r range(pols_month_df$year)`. 
+
+__snp_df dataset__
+
+* There are  `r ncol(snp_df)` columns (variables) and `r nrow(snp_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(snp_df)`. This shows percent of unemployment in a specific year and month.
+* Range of years is `r range(snp_df$year)`. 
+
+__unemp_df dataset__
+
+* There are  `r ncol(unemp_df)` columns (variables) and `r nrow(unemp_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(unemp_df)`. This shows the year and month that the stock markets close and the closing stock prices. 
+* Range of years is `r range(unemp_df$year)`. 
+
+__pols_snp_unemp_df__
+
+* There are  `r ncol(pols_snp_unemp_df)` columns (variables) and `r nrow(pols_snp_unemp_df)` rows (observations). 
+* This dataset includes the following variables: `r colnames(pols_snp_unemp_df)`. This is a combined dataset featuring variables from the pols_month_df, snp_df and unemp_df (shown above).
+* Range of years is `r range(pols_snp_unemp_df$year)`. 
+
+
+
