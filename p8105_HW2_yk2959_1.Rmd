@@ -202,3 +202,26 @@ skimr::skim(pols_month_df)
 i have loaded and cleaned the data in pols-month.csv, as well as separated the column "mon" into "year", "month" and day". I also converted the "month" variable into a numeric variable. I replaced the month number with a month name.
 
 I also created a president variable taking values gop and dem, and remove prez_dem and prez_gop; and remove the day variable.
+
+### Dataset for snp.csv
+
+```{r}
+snp_df <- read_csv("./data/snp.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = '/') %>% 
+  mutate(year = as.numeric(year)) %>% 
+  mutate(month = month.abb[as.numeric(month)]) %>% 
+  select(-day) %>% 
+      mutate(year=if_else(year<23, year+2000, year+1900)) %>% 
+  arrange(year, month)
+
+
+skimr::skim(snp_df)
+```
+
+i have loaded and cleaned the data in snp.csv, as well as separated the column "date" into "month", "day", "year". I also converted the "month" variable into a numeric variable. 
+
+I replaced the month number with a month name.
+
+Also I changed the year from a double digit format to a four digit format. 
+
