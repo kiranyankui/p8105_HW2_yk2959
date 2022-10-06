@@ -101,3 +101,30 @@ Ans: Proportion of station entrances / exits without vending allow entrance is (
 I am reformating data so that route number and route name are distinct variables. 
 
 * How many distinct stations serve the A train? Of the stations that serve the A train, how many are ADA compliant?
+
+
+## Problem 2    
+
+```{r }
+
+# read and clean the Mr Trash Wheel dataset from the excel file
+
+Mr_Trash_df <- read_excel("./data/Trash Wheel Collection Data.xlsx", 
+  sheet="Mr. Trash Wheel", 
+  range = "A2:N549",
+  skip = 1) %>% 
+  janitor::clean_names() %>% 
+  drop_na(dumpster) %>% 
+   mutate(
+    sports_balls = as.integer(sports_balls),
+    year = as.numeric(year)) %>% 
+   add_column(name = "Mr. Trash Wheel")
+
+
+skimr::skim(Mr_Trash_df)
+  
+```
+
+I ensured the use of reasonable variable names. 
+I have ommited rows that do not include dumpster-specific data. 
+I have rounded the number of sports balls to the nearest integer and converted the result to an integer variable. 
