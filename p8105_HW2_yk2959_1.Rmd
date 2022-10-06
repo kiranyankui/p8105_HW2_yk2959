@@ -1,0 +1,14 @@
+---
+title: "P8105 Homework 2"
+author: "Kiran Kui"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+## Load Libraries 
+
+```{r setup}
+
+library(tidyverse)
+library(readxl)
+```
