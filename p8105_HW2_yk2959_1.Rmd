@@ -178,3 +178,27 @@ The combined dataset Both_Trash_df contains:
 The total weight of trash collected by Professor Trash Wheel is `r sum(Pf_Trash_df$weight_tons)` tons. 
 
 The total number of sports balls collected by Mr. Trash Wheel in 2020 is `r Mr_Trash_df %>% filter (year=="2020") %>% pull(sports_balls) %>% sum()` balls. 
+
+
+## Problem 3
+
+### Dataset for pols-month.csv
+
+```{r}
+pols_month_df <- read_csv("./data/pols-month.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(mon, into = c("year", "month", "day"), sep = '-') %>% 
+  mutate(year = as.numeric(year),
+        month = month.abb[as.numeric(month)],
+        president = case_when(
+        prez_dem == 1 ~ "dem",
+        prez_gop > 0 ~ "gop",
+        TRUE ~ "")) %>% 
+  select(-prez_dem, -prez_gop, -day)
+  
+skimr::skim(pols_month_df)
+```
+
+i have loaded and cleaned the data in pols-month.csv, as well as separated the column "mon" into "year", "month" and day". I also converted the "month" variable into a numeric variable. I replaced the month number with a month name.
+
+I also created a president variable taking values gop and dem, and remove prez_dem and prez_gop; and remove the day variable.
